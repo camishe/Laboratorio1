@@ -1,0 +1,65 @@
+@startuml
+class P1ProyectoPOO {
+  + main(args: String[]): void
+}
+
+class Clientes {
+  - nombre: String
+  - apellido: String
+  - cedula: long
+  - telefono: long
+  + constructor()
+  + getters/setters
+}
+
+class Reservas {
+  - numDias: int
+  - cliente: Clientes
+  + constructor()
+  + getNombreCompletoCliente(): String
+}
+
+class Habitaciones {
+  - habitaciones: ReservaHabitacion[]
+  - sc: Scanner
+  + guardarReservasCSV()
+  + mostrarHabitaciones()
+  + realizarCheckin(...): boolean
+  + anularReserva()
+}
+
+class ReservaHabitacion {
+  - numero: int
+  - reserva: Reservas
+  + isOcupada(): boolean
+}
+
+class CSVManager {
+  + escribirReservasCSV(...)
+  + leerReservasCSV(...): List<Reservas>
+}
+
+class Validaciones {
+  - sc: Scanner
+  + validarInt(...): int
+  + validarString(...): String
+  + validarLong(...): long
+}
+
+class Checkin {
+  - habitaciones: Habitaciones
+  + realizarCheckin(...)
+}
+
+'----- Relaciones -----
+P1ProyectoPOO --> Habitaciones : crea y usa
+
+Clientes "1" -- "1" Reservas
+Habitaciones "1" *-- "1..15" ReservaHabitacion
+ReservaHabitacion "1" --> "0..1" Reservas
+Habitaciones --> CSVManager
+Checkin --> Validaciones
+Checkin --> Habitaciones
+CSVManager --> Reservas
+CSVManager --> Clientes
+@enduml
